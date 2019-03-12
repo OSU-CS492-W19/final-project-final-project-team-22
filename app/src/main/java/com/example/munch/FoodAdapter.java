@@ -1,13 +1,17 @@
 package com.example.munch;
 
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.munch.data.Food;
 
 import java.util.List;
@@ -49,17 +53,23 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
 
     class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         private TextView mFoodNameTV;
+        private ImageView mFoodImageIV;
 
         FoodViewHolder(View itemView){
             super(itemView);
             itemView.setOnClickListener(this);
 
             mFoodNameTV = itemView.findViewById(R.id.tv_food_title);
+            mFoodImageIV = itemView.findViewById(R.id.iv_food_photo);
         }
 
         public void bind(Food f){
             String name = f.title;
             mFoodNameTV.setText(name);
+
+            Glide.with(mFoodImageIV)
+                    .load(f.image)
+                    .into(mFoodImageIV);
         }
 
         @Override
