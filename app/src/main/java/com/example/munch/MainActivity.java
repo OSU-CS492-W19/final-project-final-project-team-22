@@ -6,7 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SnapHelper;
+import android.support.v7.widget.helper.ItemTouchHelper;
+import android.widget.Toast;
 
 import com.example.munch.data.Food;
 
@@ -34,6 +38,42 @@ public class MainActivity extends AppCompatActivity {
 
         //mFoodCardsRV.setHasFixedSize(true);
         mFoodCardsRV.setLayoutManager(new LinearLayoutManager((this)));
+
+        SnapHelper snapHelper = new PagerSnapHelper();
+        snapHelper.attachToRecyclerView(mFoodCardsRV);
+
+
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT) {
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                //awesome code when user grabs recycler card to reorder
+                return true;
+            }
+
+            @Override
+            public void clearView(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                super.clearView(recyclerView, viewHolder);
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                if(direction == ItemTouchHelper.RIGHT){
+                    //Toast.makeText(mContext,"It's a match!" ,Toast.LENGTH_SHORT).show();
+                }
+                //FIXME: This doesn't work yet, pls fix please
+                else if(direction == ItemTouchHelper.LEFT){
+                    int position = viewHolder.getAdapterPosition();
+                    mAdapter.removeFood(position);
+
+                    mAdapter.notifyItemRemoved(position);
+                    mAdapter.notifyItemRangeRemoved(position, mAdapter.getItemCount());
+                }
+            }
+        };
+
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
+        itemTouchHelper.attachToRecyclerView(mFoodCardsRV);
+
 
         mViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
 

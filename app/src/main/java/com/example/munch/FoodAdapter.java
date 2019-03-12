@@ -28,6 +28,11 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         notifyDataSetChanged();
     }
 
+    public void removeFood(int position){
+        mFoods.remove(position);
+        //notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount(){
         if(mFoods != null){
