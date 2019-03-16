@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         snapHelper.attachToRecyclerView(mFoodCardsRV);
 
 
-        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback(ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT) {
+        ItemTouchHelper.SimpleCallback simpleItemTouchCallback = new ItemTouchHelper.SimpleCallback( ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
             public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
                 //awesome code when user grabs recycler card to reorder
@@ -91,15 +91,12 @@ public class MainActivity extends AppCompatActivity {
                 if(direction == ItemTouchHelper.RIGHT){
                     Toast.makeText(getApplicationContext(),"It's a match!" ,Toast.LENGTH_SHORT).show();
                 }
-                //FIXME: This doesn't work yet, pls fix please
                 else if(direction == ItemTouchHelper.LEFT){
-                    int position = viewHolder.getAdapterPosition();
-                    Log.d(MainActivity.class.getSimpleName(), "position is: " + position);
-                    //mAdapter.removeFood(position);
 
-                    //mAdapter.notifyItemRemoved(position);
-                    //mAdapter.notifyItemRangeRemoved(position, mAdapter.getItemCount());
                 }
+                int position = viewHolder.getAdapterPosition();
+                Log.d(MainActivity.class.getSimpleName(), "position is: " + position);
+                mFoodCardsRV.getLayoutManager().scrollToPosition(position+1);
             }
         };
 

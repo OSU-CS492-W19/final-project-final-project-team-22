@@ -28,8 +28,10 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         notifyDataSetChanged();
     }
 
-    public void removeFood(int position){
-        mFoods.remove(position);
+    public void goToNextFood(int position){
+        notify();
+        //mFoods.remove(position);
+        //getListView().smoothScrollToPosition(21);
         //notifyDataSetChanged();
     }
 
