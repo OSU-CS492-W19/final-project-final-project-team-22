@@ -19,7 +19,7 @@
         android:padding="16dp"
         android:textSize="28sp"
         android:textStyle="bold"/>
-    
+
     <ScrollView
         android:id="@+id/sv_food_detail"
         android:layout_width="wrap_content"
