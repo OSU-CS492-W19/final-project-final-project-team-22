@@ -19,10 +19,11 @@ import android.widget.Toast;
 import android.support.design.widget.BottomNavigationView;
 
 import com.example.munch.data.Food;
+import com.example.munch.utils.SpoonacularUtils;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoodItemClickListener{
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -64,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         //Set member variables to elements in the activity_main.xml file.
         mFoodCardsRV = findViewById(R.id.rv_food_cards);
 
-        mAdapter = new FoodAdapter();
+        mAdapter = new FoodAdapter(this);
         mFoodCardsRV.setAdapter(mAdapter);
 
         //mFoodCardsRV.setHasFixedSize(true);
@@ -98,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(MainActivity.class.getSimpleName(), "position is: " + position);
                 mFoodCardsRV.getLayoutManager().scrollToPosition(position+1);
             }
+
         };
 
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallback);
@@ -114,5 +116,15 @@ public class MainActivity extends AppCompatActivity {
         });
 
         mViewModel.loadFoods();
+    }
+
+
+    @Override
+    public void onFoodItemClick(Food f) {
+        Log.d(MainActivity.class.getSimpleName(), "in onFoodItemClick!");
+
+        Intent intent = new Intent(this, FoodDetailActivity.class);
+        intent.putExtra(SpoonacularUtils.EXTRA_FOOD, f);
+        startActivity(intent);
     }
 }
