@@ -20,6 +20,7 @@ public class FoodAsyncTask extends AsyncTask<Void, Void, String> {
     }
 
     public FoodAsyncTask(String url, Callback callback){
+        Log.d(FoodAsyncTask.class.getSimpleName(), "url is: " + url);
         mURL = url;
         mCallback = callback;
     }
@@ -27,9 +28,12 @@ public class FoodAsyncTask extends AsyncTask<Void, Void, String> {
     @Override
     protected String doInBackground(Void... voids) {
         if (mURL != null) {
+
+            Log.d(FoodAsyncTask.class.getSimpleName(), "mURL is: " + mURL);
             String results = null;
             try {
                 results = NetworkUtils.doHTTPGet(mURL);
+                Log.d(FoodAsyncTask.class.getSimpleName(), "results is: " + results);
             } catch (IOException e) {
                 e.printStackTrace();
             }

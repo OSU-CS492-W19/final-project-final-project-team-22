@@ -11,7 +11,7 @@ import java.util.List;
 
 public class SpoonacularUtils{
 
-    private static final String baseURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&tags=vegetarian%2Cdessert";
+    private static final String baseURL = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/random?number=10&tags=dessert";
 
     private static final Gson gson = new Gson();
 

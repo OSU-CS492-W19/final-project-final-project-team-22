@@ -2,6 +2,8 @@ package com.example.munch;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +12,11 @@ import android.support.v7.widget.PagerSnapHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SnapHelper;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import android.support.design.widget.BottomNavigationView;
 
 import com.example.munch.data.Food;
 
@@ -24,11 +30,36 @@ public class MainActivity extends AppCompatActivity {
 
     private FoodAdapter mAdapter;
     private FoodViewModel mViewModel;
+    private BottomNavigationView mMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mMenu = findViewById(R.id.navigationView);
+        mMenu.setOnNavigationItemSelectedListener(
+                new BottomNavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                        switch (item.getItemId()) {
+                            case R.id.navigation_my_profile:
+                                //Future Implementation if we have time to do this
+                                return true;
+                            case R.id.navigation_my_home:
+                                //Nothing happens, you're already home.
+                                return true;
+                            case R.id.navigation_my_kitchen:
+                                Log.d(MainActivity.class.getSimpleName(), "in navigation my kitchen logic");
+                                Intent intent = new Intent(getApplicationContext(), MyKitchenActivity.class);
+                                startActivity(intent);
+                                return true;
+                        }
+                        return true;
+                    }
+                });
+
+
 
         //Set member variables to elements in the activity_main.xml file.
         mFoodCardsRV = findViewById(R.id.rv_food_cards);
@@ -58,15 +89,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                 if(direction == ItemTouchHelper.RIGHT){
-                    //Toast.makeText(mContext,"It's a match!" ,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),"It's a match!" ,Toast.LENGTH_SHORT).show();
                 }
                 //FIXME: This doesn't work yet, pls fix please
                 else if(direction == ItemTouchHelper.LEFT){
                     int position = viewHolder.getAdapterPosition();
-                    mAdapter.removeFood(position);
+                    Log.d(MainActivity.class.getSimpleName(), "position is: " + position);
+                    //mAdapter.removeFood(position);
 
-                    mAdapter.notifyItemRemoved(position);
-                    mAdapter.notifyItemRangeRemoved(position, mAdapter.getItemCount());
+                    //mAdapter.notifyItemRemoved(position);
+                    //mAdapter.notifyItemRangeRemoved(position, mAdapter.getItemCount());
                 }
             }
         };
