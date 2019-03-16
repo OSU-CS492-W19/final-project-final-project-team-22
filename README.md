@@ -3,5 +3,5 @@
 Final Project team 22
 
 Team: 
-Captain Symon Ramos 
-Janitor Fauzi Kliman
+Symon Ramos 
+Fauzi Kliman
