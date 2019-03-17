@@ -10,7 +10,7 @@
         android:layout_height="fill_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:scaleType="fitXY" />
+        android:layout_marginBottom="200dp"/>
 
     <TextView
         android:id="@+id/tv_food_title"

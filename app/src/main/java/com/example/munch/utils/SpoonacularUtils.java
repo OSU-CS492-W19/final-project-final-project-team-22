@@ -15,6 +15,8 @@ public class SpoonacularUtils{
 
     private static final Gson gson = new Gson();
 
+    public static final String EXTRA_FOOD = "SpoonacularUtils.Food";
+
     public static class SpoonacularResults{
         Food [] recipes;
     }

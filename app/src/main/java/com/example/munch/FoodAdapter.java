@@ -19,8 +19,15 @@ import java.util.List;
 public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder>{
     private List<Food> mFoods;
 
-    public FoodAdapter(){
+    OnFoodItemClickListener mFoodItemClickListener;
 
+    public interface OnFoodItemClickListener {
+        void onFoodItemClick(Food f);
+    }
+
+
+    public FoodAdapter(OnFoodItemClickListener l){
+        mFoodItemClickListener = l;
     }
 
     public void updateFood(List<Food> food){
@@ -58,13 +65,20 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         foods.bind(mFoods.get(i));
     }
 
-    class FoodViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    class FoodViewHolder extends RecyclerView.ViewHolder{
         private TextView mFoodNameTV;
         private ImageView mFoodImageIV;
 
         FoodViewHolder(View itemView){
             super(itemView);
-            itemView.setOnClickListener(this);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Food f = mFoods.get(getAdapterPosition());
+                    mFoodItemClickListener.onFoodItemClick(f);
+                }
+            });
 
             mFoodNameTV = itemView.findViewById(R.id.tv_food_title);
             mFoodImageIV = itemView.findViewById(R.id.iv_food_photo);
@@ -79,10 +93,6 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                     .into(mFoodImageIV);
         }
 
-        @Override
-        public void onClick(View view){
-            //Something happens
-        }
     }
 
 
