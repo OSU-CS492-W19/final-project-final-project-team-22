@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.munch.data.FavoriteFood;
+import com.example.munch.utils.FoodUtils;
+import com.example.munch.utils.SpoonacularUtils;
 
 import java.util.List;
 
@@ -72,5 +74,9 @@ public class MyKitchenActivity extends AppCompatActivity implements FavoriteFood
     @Override
     public void onFavoriteFoodItemClick(FavoriteFood favoriteFood) {
         System.out.println("FAVORITE FOOD ITEM CLICK: " + favoriteFood.title);
+
+        Intent intent = new Intent(this, FoodDetailActivity.class);
+        intent.putExtra(SpoonacularUtils.EXTRA_FOOD, FoodUtils.toFood(favoriteFood));
+        startActivity(intent);
     }
 }

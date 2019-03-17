@@ -20,6 +20,7 @@ import android.support.design.widget.BottomNavigationView;
 
 import com.example.munch.data.FavoriteFood;
 import com.example.munch.data.Food;
+import com.example.munch.utils.FoodUtils;
 import com.example.munch.utils.SpoonacularUtils;
 
 import java.util.List;
@@ -96,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
                     Toast.makeText(getApplicationContext(),"It's a match!" ,Toast.LENGTH_SHORT).show();
                     Food food = mFoodAdapter.getFood(viewHolder.getAdapterPosition());
                     System.out.println("FOOD THAT WAS SWIPED: " + food.title);
-                    mFavoriteFoodViewModel.insertFavoriteFood(foodToFavoriteFood(food));
+                    mFavoriteFoodViewModel.insertFavoriteFood(FoodUtils.toFavoriteFood(food));
                 }
 
                 else if(direction == ItemTouchHelper.LEFT){
@@ -136,20 +137,5 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
         Intent intent = new Intent(this, FoodDetailActivity.class);
         intent.putExtra(SpoonacularUtils.EXTRA_FOOD, f);
         startActivity(intent);
-    }
-
-    public FavoriteFood foodToFavoriteFood(Food food) {
-        FavoriteFood favoriteFood = new FavoriteFood();
-
-        favoriteFood.title = food.title;
-        favoriteFood.instructions = food.instructions;
-        favoriteFood.image = food.image;
-        favoriteFood.spoonacularSourceUrl = food.spoonacularSourceUrl;
-        favoriteFood.spoonacularScore = food.spoonacularScore;
-        favoriteFood.preparationMinutes = food.preparationMinutes;
-        favoriteFood.cookingMinutes = food.cookingMinutes;
-        favoriteFood.readyInMinutes = food.readyInMinutes;
-
-        return favoriteFood;
     }
 }
