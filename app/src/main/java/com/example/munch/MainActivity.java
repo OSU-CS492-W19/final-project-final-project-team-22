@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import android.support.design.widget.BottomNavigationView;
 
-import com.example.munch.data.FavoriteFood;
 import com.example.munch.data.Food;
 import com.example.munch.utils.FoodUtils;
 import com.example.munch.utils.SpoonacularUtils;
@@ -41,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mMenu = findViewById(R.id.navigationView);
+        mMenu = findViewById(R.id.navigation_view);
         mMenu.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
@@ -54,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
                                 //Nothing happens, you're already home.
                                 return true;
                             case R.id.navigation_my_kitchen:
-                                Log.d(MainActivity.class.getSimpleName(), "in navigation my kitchen logic");
+                                Log.d(MainActivity.class.getSimpleName(), "in navigation_menu my kitchen logic");
                                 Intent intent = new Intent(getApplicationContext(), MyKitchenActivity.class);
                                 startActivity(intent);
                                 return true;

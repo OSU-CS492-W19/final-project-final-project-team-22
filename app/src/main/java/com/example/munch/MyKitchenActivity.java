@@ -32,7 +32,7 @@ public class MyKitchenActivity extends AppCompatActivity implements FavoriteFood
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_kitchen);
 
-        mMenu = findViewById(R.id.navigationView);
+        mMenu = findViewById(R.id.navigation_view);
         mMenu.setOnNavigationItemSelectedListener(
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -42,7 +42,7 @@ public class MyKitchenActivity extends AppCompatActivity implements FavoriteFood
                             //Future Implementation if we have time to do this
                             return true;
                         case R.id.navigation_my_home:
-                            Log.d(MainActivity.class.getSimpleName(), "in navigation my home logic");
+                            Log.d(MainActivity.class.getSimpleName(), "in navigation_menu my home logic");
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                             return true;
