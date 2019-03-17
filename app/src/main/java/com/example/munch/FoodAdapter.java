@@ -35,11 +35,8 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
         notifyDataSetChanged();
     }
 
-    public void goToNextFood(int position){
-        notify();
-        //mFoods.remove(position);
-        //getListView().smoothScrollToPosition(21);
-        //notifyDataSetChanged();
+    public Food getFood(int index) {
+        return mFoods.get(index);
     }
 
     @Override
@@ -92,8 +89,5 @@ public class FoodAdapter extends RecyclerView.Adapter<FoodAdapter.FoodViewHolder
                     .load(f.image)
                     .into(mFoodImageIV);
         }
-
     }
-
-
 }

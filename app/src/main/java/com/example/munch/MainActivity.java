@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import android.support.design.widget.BottomNavigationView;
 
+import com.example.munch.data.FavoriteFood;
 import com.example.munch.data.Food;
 import com.example.munch.utils.SpoonacularUtils;
 
@@ -29,8 +30,9 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
 
     private RecyclerView mFoodCardsRV;
 
-    private FoodAdapter mAdapter;
-    private FoodViewModel mViewModel;
+    private FoodAdapter mFoodAdapter;
+    private FoodViewModel mFoodViewModel;
+    private FavoriteFoodViewModel mFavoriteFoodViewModel;
     private BottomNavigationView mMenu;
 
     @Override
@@ -65,8 +67,8 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
         //Set member variables to elements in the activity_main.xml file.
         mFoodCardsRV = findViewById(R.id.rv_food_cards);
 
-        mAdapter = new FoodAdapter(this);
-        mFoodCardsRV.setAdapter(mAdapter);
+        mFoodAdapter = new FoodAdapter(this);
+        mFoodCardsRV.setAdapter(mFoodAdapter);
 
         //mFoodCardsRV.setHasFixedSize(true);
         mFoodCardsRV.setLayoutManager(new LinearLayoutManager((this)));
@@ -89,12 +91,18 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
 
             @Override
             public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
                 if(direction == ItemTouchHelper.RIGHT){
                     Toast.makeText(getApplicationContext(),"It's a match!" ,Toast.LENGTH_SHORT).show();
+                    Food food = mFoodAdapter.getFood(viewHolder.getAdapterPosition());
+                    System.out.println("FOOD THAT WAS SWIPED: " + food.title);
+                    mFavoriteFoodViewModel.insertFavoriteFood(foodToFavoriteFood(food));
                 }
+
                 else if(direction == ItemTouchHelper.LEFT){
 
                 }
+
                 int position = viewHolder.getAdapterPosition();
                 Log.d(MainActivity.class.getSimpleName(), "position is: " + position);
                 mFoodCardsRV.getLayoutManager().scrollToPosition(position+1);
@@ -106,16 +114,18 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
         itemTouchHelper.attachToRecyclerView(mFoodCardsRV);
 
 
-        mViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
+        mFoodViewModel = ViewModelProviders.of(this).get(FoodViewModel.class);
 
-        mViewModel.getFoods().observe(this, new Observer<List<Food>>(){
+        mFoodViewModel.getFoods().observe(this, new Observer<List<Food>>(){
             @Override
             public void onChanged(@Nullable List<Food> foods){
-                mAdapter.updateFood(foods);
+                mFoodAdapter.updateFood(foods);
             }
         });
 
-        mViewModel.loadFoods();
+        mFoodViewModel.loadFoods();
+
+        mFavoriteFoodViewModel = ViewModelProviders.of(this).get(FavoriteFoodViewModel.class);
     }
 
 
@@ -126,5 +136,20 @@ public class MainActivity extends AppCompatActivity implements FoodAdapter.OnFoo
         Intent intent = new Intent(this, FoodDetailActivity.class);
         intent.putExtra(SpoonacularUtils.EXTRA_FOOD, f);
         startActivity(intent);
+    }
+
+    public FavoriteFood foodToFavoriteFood(Food food) {
+        FavoriteFood favoriteFood = new FavoriteFood();
+
+        favoriteFood.title = food.title;
+        favoriteFood.instructions = food.instructions;
+        favoriteFood.image = food.image;
+        favoriteFood.spoonacularSourceUrl = food.spoonacularSourceUrl;
+        favoriteFood.spoonacularScore = food.spoonacularScore;
+        favoriteFood.preparationMinutes = food.preparationMinutes;
+        favoriteFood.cookingMinutes = food.cookingMinutes;
+        favoriteFood.readyInMinutes = food.readyInMinutes;
+
+        return favoriteFood;
     }
 }
