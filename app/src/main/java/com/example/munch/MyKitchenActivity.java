@@ -39,7 +39,8 @@ public class MyKitchenActivity extends AppCompatActivity implements FavoriteFood
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.navigation_my_profile:
-                            //Future Implementation if we have time to do this
+                            Intent intent2 = new Intent(getApplicationContext(), MyProfileActivity.class);
+                            startActivity(intent2);
                             return true;
                         case R.id.navigation_my_home:
                             Log.d(MainActivity.class.getSimpleName(), "in navigation_menu my home logic");
