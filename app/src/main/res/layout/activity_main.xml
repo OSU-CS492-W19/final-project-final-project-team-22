@@ -11,8 +11,7 @@
         android:id="@+id/rv_food_cards"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/border"
-        android:layout_margin="0dp" />
+        android:background="@drawable/border"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation_view"
@@ -23,7 +22,5 @@
         app:itemIconTint="@android:color/white"
         app:itemTextColor="@android:color/white"
         app:menu="@menu/navigation_menu"/>
-
-
 
 </FrameLayout>
