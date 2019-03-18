@@ -2,6 +2,7 @@ package com.example.munch;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
+import android.os.Parcelable;
 
 import com.example.munch.data.Food;
 import com.example.munch.data.FoodRepository;
@@ -25,5 +26,13 @@ public class FoodViewModel extends ViewModel {
 
     public void loadFoods() {
         mRepository.loadFoods();
+    }
+
+    public void setFoodState(Parcelable newState) {
+        mRepository.setFoodState(newState);
+    }
+
+    public Parcelable getFoodState() {
+        return mRepository.getFoodState();
     }
 }
