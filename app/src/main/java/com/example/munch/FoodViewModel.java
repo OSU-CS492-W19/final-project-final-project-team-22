@@ -14,8 +14,9 @@ public class FoodViewModel extends ViewModel {
     private FoodRepository mRepository;
 
     public FoodViewModel() {
-        mRepository = new FoodRepository();
+        mRepository = FoodRepository.getInstance();
         mFoods = mRepository.getFoods();
+        System.out.println("ASDFASDFASFASDF ASDF ASDFAS DJF JSKADFJASDKFJ ASDKJF ASKDJF SKAJD FKJASD FKJSAD FKJSA DFKJAS FKJAS DFKJSA DKFJAS DJFKASKJDF");
     }
 
     public LiveData<List<Food>> getFoods() {

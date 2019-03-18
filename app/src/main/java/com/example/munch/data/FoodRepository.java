@@ -13,9 +13,22 @@ public class FoodRepository implements FoodAsyncTask.Callback {
 
     private static final String TAG = FoodRepository.class.getSimpleName();
 
+    private static FoodRepository INSTANCE;
     private MutableLiveData<List<Food>> mFoods;
+    private boolean mIsFoodLoaded = false;
 
-    public FoodRepository() {
+    public static FoodRepository getInstance() {
+        if(INSTANCE == null) {
+            synchronized (FoodRepository.class) {
+                if(INSTANCE == null)
+                    INSTANCE = new FoodRepository();
+            }
+        }
+
+        return INSTANCE;
+    }
+
+    private FoodRepository() {
         mFoods = new MutableLiveData<>();
         mFoods.setValue(null);
     }
@@ -30,13 +43,14 @@ public class FoodRepository implements FoodAsyncTask.Callback {
             String url = SpoonacularUtils.buildSpoonacularURL();
             Log.d(TAG, "fetching foods with url: " + url);
             new FoodAsyncTask(url, this).execute();
+            mIsFoodLoaded = true;
         } else {
             Log.d(TAG, "using cached foods");
         }
     }
 
     private boolean shouldLoadFoods() {
-        return true;
+        return !mIsFoodLoaded;
     }
 
     @Override
