@@ -4,8 +4,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.munch.data.FavoriteFood;
 
 import java.util.List;
@@ -50,15 +52,21 @@ public class FavoriteFoodAdapter extends RecyclerView.Adapter<FavoriteFoodAdapte
 
     class FavoriteFoodItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private TextView mFavoriteFoodTV;
+        private ImageView mFavoriteFoodIV;
 
         public FavoriteFoodItemViewHolder(View itemView) {
             super(itemView);
             mFavoriteFoodTV = itemView.findViewById(R.id.tv_favorite_food_item);
+            mFavoriteFoodIV = itemView.findViewById(R.id.iv_favorite_food_item);
             itemView.setOnClickListener(this);
         }
 
         public void bind(FavoriteFood favoriteFood) {
             mFavoriteFoodTV.setText(favoriteFood.title);
+
+            Glide.with(mFavoriteFoodIV)
+                    .load(favoriteFood.image)
+                    .into(mFavoriteFoodIV);
         }
 
         @Override
